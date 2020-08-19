@@ -6,8 +6,8 @@ class App extends Component {
 
   state= {
     persons :[
-     {id:'aa', name:'anukul', age:'20'},
-     {id:'bb', name:'divyansh', age:'25'},
+     {id:'aa', name:'anukul', age:'10'},
+     {id:'bb', name:'divyansh', age:'20'},
      {id:'cc', name:'sarthak', age:'30'}
     ],
     showPerson: false
@@ -24,15 +24,22 @@ nameSwitchHandler = (newName) => {
  )
 }
 
-nameChangeHandler = (event) => {
-  this.setState( {
-    persons:[
-     {name:'Anukul', age:'20'},
-     {name:event.target.value, age:'30'},
-     {name:'sarthak', age:'40'}
-    ]
-  }
-)
+nameChangeHandler = (event, id) => {
+
+const personIndex = this.state.persons.findIndex(p =>{
+       return p.id===id
+});
+
+const person1 ={
+  ...this.state.persons[personIndex]
+}
+
+person1.name=event.target.value;
+
+const persons2 = [...this.state.persons]
+persons2[personIndex] = person1;
+
+this.setState({persons:persons2});
 }
 
 tooglePersonHandler = () =>{
@@ -60,6 +67,7 @@ deletePersonHandler = (personIndex)=>{
                   name={person.name}
                   age={person.age}
                   key={person.id}
+                  changed={(event) => this.nameChangeHandler(event,person.id)}
                   />
                 })} 
               </div>
