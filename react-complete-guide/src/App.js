@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium,{StyleRoot} from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -57,6 +58,19 @@ deletePersonHandler = (personIndex)=>{
 
   render() {
 
+    const style = {
+        backgroundColor:'green',
+        color:'white',
+        font:'inherit',
+        border:'1px solid blue',
+        padding:'8px',
+        cursor:'pointer',
+        ':hover':{
+          color:'black',
+          backgroundColor:'lightgreen'
+        }
+    }
+
           let persons = null;
           if(this .state.showPerson){
             persons=(
@@ -72,12 +86,31 @@ deletePersonHandler = (personIndex)=>{
                 })} 
               </div>
             )
+            style.backgroundColor='red';
+            style[':hover']={
+              backgroundColor:'salmon',
+              color:'black'
+            }
           }
 
+             const classes = [];
+if (this.state.persons.length<=2)
+{
+  classes.push('red');
+}
+if (this.state.persons.length<=1)
+{
+  classes.push('bold');
+}
+
+
+
     return (
+      <StyleRoot>
           <div className="App">
             <h1>.............</h1>
-            <button onClick={this.tooglePersonHandler}>Toogle Person</button>
+            <p className={classes.join(' ')}>This is really working</p>
+            <button style={style} onClick={this.tooglePersonHandler}>Toogle Person</button>
                   {/* <Person 
               //        name={this.state.persons[0].name} 
               //        age={this.state.persons[0].age}></Person>
@@ -91,8 +124,9 @@ deletePersonHandler = (personIndex)=>{
               //          age={this.state.persons[2].age}>.........</Person> */}
               {persons}   
            </div>
+           </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
