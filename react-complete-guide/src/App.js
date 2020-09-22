@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
-import Radium,{StyleRoot} from 'radium';
+// import Radium,{StyleRoot} from 'radium';
+import styled from 'styled-components';
 import Person from './Person/Person';
+
+const Styledbutton = styled.button`
+background-color:${anukul => anukul.saini? 'red' :'green'};
+color:white;
+font:inherit;
+border:1px solid blue;
+padding:8px;
+cursor:pointerl;
+&:hover {
+  color:black;
+  background-color:${anukul => anukul.saini? 'salmon' :'lightgreen'};
+}
+`;
+
 
 class App extends Component {
 
@@ -58,18 +73,18 @@ deletePersonHandler = (personIndex)=>{
 
   render() {
 
-    const style = {
-        backgroundColor:'green',
-        color:'white',
-        font:'inherit',
+     const style = {
+        // backgroundColor:'green',   without styled componenet and we have to use radium to use hover property......
+         color:'white',
+         font:'inherit',
         border:'1px solid blue',
-        padding:'8px',
-        cursor:'pointer',
-        ':hover':{
-          color:'black',
-          backgroundColor:'lightgreen'
+         padding:'8px',
+         cursor:'pointer',
+          ':hover':{
+           color:'black',
+           backgroundColor:'lightgreen'
         }
-    }
+   }
 
           let persons = null;
           if(this .state.showPerson){
@@ -86,12 +101,12 @@ deletePersonHandler = (personIndex)=>{
                 })} 
               </div>
             )
-            style.backgroundColor='red';
-            style[':hover']={
-              backgroundColor:'salmon',
-              color:'black'
-            }
-          }
+          //   style.backgroundColor='red';
+          //   style[':hover']={//using radium
+          //     backgroundColor:'salmon',
+          //     color:'black'
+          //   }
+           }
 
              const classes = [];
 if (this.state.persons.length<=2)
@@ -106,11 +121,11 @@ if (this.state.persons.length<=1)
 
 
     return (
-      <StyleRoot>
+     
           <div className="App">
             <h1>.............</h1>
             <p className={classes.join(' ')}>This is really working</p>
-            <button style={style} onClick={this.tooglePersonHandler}>Toogle Person</button>
+            <Styledbutton saini ={this .state.showPerson}  onClick={this.tooglePersonHandler}>Toogle Person</Styledbutton>
                   {/* <Person 
               //        name={this.state.persons[0].name} 
               //        age={this.state.persons[0].age}></Person>
@@ -124,9 +139,9 @@ if (this.state.persons.length<=1)
               //          age={this.state.persons[2].age}>.........</Person> */}
               {persons}   
            </div>
-           </StyleRoot>
+         
     );
   }
 }
 
-export default Radium(App);
+export default App;
